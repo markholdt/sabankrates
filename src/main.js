@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
-import ".././semantic/dist/semantic.min.css";
+//import ".././semantic/dist/semantic.min.css";
 import SuiVue from "semantic-ui-vue";
 import VueNumerals from "vue-numerals";
 //import PortalVue from "portal-vue";
