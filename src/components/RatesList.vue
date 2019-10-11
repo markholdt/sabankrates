@@ -56,15 +56,13 @@
           </div>
         </div>
         <div class="twelve wide column">
-          <h3 class="ui header">
-            <img class="ui mini image" src="@/assets/favicon-32x32.png" />
-            <div class="content">
-              SA's Fixed Deposit Rates
-              <div class="sub header">
-                <small>We shed light & bring transparency, where there is none</small>
-              </div>
-            </div>
-          </h3>
+          <h2 class="ui header">
+            <img
+              class="ui medium circular image"
+              src="https://lipis.github.io/flag-icon-css/flags/4x3/za.svg"
+            />
+            <div class="content">Fixed Deposit Rates</div>
+          </h2>
 
           <div class="ui segment">
             <table class="ui celled green striped table">
