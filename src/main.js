@@ -10,7 +10,7 @@ import VueNumerals from "vue-numerals";
 import VueNumeric from "vue-numeric";
 //import VPopover from "vue-js-popover";
 
-//require("semantic-ui-css/semantic.css");
+require("semantic-ui-css/semantic.css");
 Vue.config.productionTip = false;
 Vue.use(VueNumeric);
 Vue.use(SuiVue);
