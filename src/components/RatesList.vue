@@ -61,7 +61,7 @@
               class="ui medium circular image"
               src="https://lipis.github.io/flag-icon-css/flags/4x3/za.svg"
             />
-            <div class="content">Fixed Deposit Rates</div>
+            <div class="content">Best Fixed Deposit Rates for {{ date| formatDate}}</div>
           </h2>
 
           <div class="ui segment">
@@ -72,7 +72,6 @@
                   <th class="right aligned">Effective Annual Rate</th>
                   <th class="right aligned">Est Earnings</th>
                   <th class="right aligned">Term</th>
-                  <th class="right aligned">Min Deposit</th>
                 </tr>
               </thead>
               <tbody>
@@ -104,9 +103,6 @@
                   </td>
                   <td class="right aligned">
                     <Statistic :header="c.term" :subHeader="'months'" />
-                  </td>
-                  <td class="right aligned">
-                    <Statistic :header="c.minDeposit | numeralFormat('0,00')" :subHeader="'ZAR'" />
                   </td>
                 </tr>
               </tbody>
@@ -197,7 +193,7 @@
               <sui-accordion-content>
                 <small>
                   <ul>
-                    <li>Ahh Absa. Absa, Absa, Absa. Your website looks great, but you do not disclose whether your fixed deposit rates are nominal or effective. Even your call centre does not know. Take a leaflet out of Capitec or Sasfin's book. They are transparent about their rates. Until you share this information, your rates will not appear here. Good-bye</li>
+                    <li>Some enquiries about their fixed deposit rates are outstanding. Specifically they do not disclose whether the quoted rates are nominal or effective.</li>
                   </ul>
                 </small>
               </sui-accordion-content>
@@ -220,6 +216,7 @@ export default {
   },
   data() {
     return {
+      date: new Date(),
       investmentAmount: 10000,
       current: null,
       options: [
@@ -272,7 +269,8 @@ export default {
 
         { key: "fnb", text: "FNB", value: "FNB" },
         { key: "ned", text: "Nedbank", value: "NED" },
-        { key: "ca", text: "Capitec", value: "CAP" }
+        { key: "ca", text: "Capitec", value: "CAP" },
+        { key: "sas", text: "Sasfin", value: "SAS" }
       ],
       currentBank: [],
       currentAge: "18",
