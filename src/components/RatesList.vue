@@ -1,205 +1,283 @@
 <template>
   <div class="ui">
     <div class="ui column padded grid centered">
-      <div class="row">
-        <div class="three wide column">
-          <h2 class="ui header">Filter</h2>
-          <div class="ui form">
-            <div class="field">
-              <label>Sort by</label>
-              <sui-dropdown
-                placeholder="Sort"
-                :labeled="true"
-                selection
-                :options="options"
-                v-model="sortBy"
-              />
-            </div>
-            <div class="field">
-              <label>Age Criteria</label>
-              <sui-dropdown
-                fluid
-                :options="ageOptions"
-                placeholder="Show all ages"
-                selection
-                v-model="currentAge"
-              />
-            </div>
-            <div class="field">
-              <label>Investment Amount</label>
-              <vue-numeric separator="," v-model="investmentAmount" :min="0"></vue-numeric>
-            </div>
-            <div class="field">
-              <label>Filter Term</label>
-              <sui-dropdown
-                fluid
-                multiple
-                :options="termOptions"
-                placeholder="Show all"
-                selection
-                v-model="currentTerm"
-              />
-            </div>
-            <div class="field">
-              <label>Filter Banks</label>
-              <sui-dropdown
-                fluid
-                multiple
-                :options="banks"
-                placeholder="Show all"
-                selection
-                v-model="currentBank"
-              />
-            </div>
+      <div class="computer tablet only twelve wide column">
+        <!-- computer only stuff -->
+        <div class="row">
+          <div class="three wide column">
+            <h2 class="ui header">Filter</h2>
+            <div class="ui form">
+              <div class="field">
+                <label>Sort by</label>
+                <sui-dropdown
+                  placeholder="Sort"
+                  :labeled="true"
+                  selection
+                  :options="options"
+                  v-model="sortBy"
+                />
+              </div>
+              <div class="field">
+                <label>Age Criteria</label>
+                <sui-dropdown
+                  fluid
+                  :options="ageOptions"
+                  placeholder="Show all ages"
+                  selection
+                  v-model="currentAge"
+                />
+              </div>
+              <div class="field">
+                <label>Investment Amount</label>
+                <vue-numeric separator="," v-model="investmentAmount" :min="0"></vue-numeric>
+              </div>
+              <div class="field">
+                <label>Filter Term</label>
+                <sui-dropdown
+                  fluid
+                  multiple
+                  :options="termOptions"
+                  placeholder="Show all"
+                  selection
+                  v-model="currentTerm"
+                />
+              </div>
+              <div class="field">
+                <label>Filter Banks</label>
+                <sui-dropdown
+                  fluid
+                  multiple
+                  :options="banks"
+                  placeholder="Show all"
+                  selection
+                  v-model="currentBank"
+                />
+              </div>
 
-            <div class="ui primary button" @click.prevent="getResults(1)">Update</div>
+              <div class="ui primary button" @click.prevent="getResults(1)">Update</div>
+            </div>
           </div>
-        </div>
-        <div class="twelve wide column">
-          <h2 class="ui header">
-            <img
-              class="ui medium circular image"
-              src="https://lipis.github.io/flag-icon-css/flags/4x3/za.svg"
-            />
-            <div class="content">South Africa's Best Fixed Deposit Rates for {{ date| formatDate}}</div>
-          </h2>
+          <div class="twelve wide column">
+            <h2 class="ui header">
+              <img
+                class="ui medium circular image"
+                src="https://lipis.github.io/flag-icon-css/flags/4x3/za.svg"
+              />
+              <div class="content">South Africa's Best Fixed Deposit Rates for {{ date| formatDate}}</div>
+            </h2>
 
-          <div class="ui segment">
-            <table class="ui celled green striped table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th class="right aligned">Effective Annual Rate</th>
-                  <th class="right aligned">Est Earnings</th>
-                  <th class="right aligned">Term</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="c in results">
-                  <td>
-                    <img
-                      class="ui middle aligned image"
-                      :src="'//logo.clearbit.com/' +  c.logo + '?size=25'"
-                    />
-                    {{c.bank}}
-                  </td>
-                  <td class="right aligned">
-                    <Statistic
-                      :header="c.annualPercentageYield + ' %'"
-                      :subHeader="'as at ' + c.effectiveDate"
-                    />
-                  </td>
-                  <td class="right aligned">
-                    <div
-                      class="ui middle aligned"
-                      :data-tooltip="'Total estimated interest over ' + c.termDescription + ' given a R ' +  investmentAmount + ' investment.'"
-                    >
-                      <Statistic
-                        :header="c.estimatedEarnings"
-                        :icon="'question circle outline icon'"
-                        :subHeader="'Total interest'"
+            <div class="ui segment">
+              <table class="ui celled green striped table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th class="right aligned">Effective Annual Rate</th>
+                    <th class="right aligned">Est Earnings</th>
+                    <th class="right aligned">Term</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="c in results">
+                    <td>
+                      <img
+                        class="ui middle aligned image"
+                        :src="'//logo.clearbit.com/' +  c.logo + '?size=25'"
                       />
-                    </div>
-                  </td>
-                  <td class="right aligned">
-                    <Statistic :header="c.term" :subHeader="'months'" />
-                  </td>
-                </tr>
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="5">
-                    <sui-menu v-if="totalPages > 1">
-                      <a is="sui-menu-item" @click.prevent="getResults(1)">
-                        <sui-icon name="left chevron" />First Page
-                      </a>
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr -4) > 0 && (currentPageNr -4 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr -4)"
-                      >{{ currentPageNr -4}}</a>
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr -3) > 0 && (currentPageNr -3 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr -3)"
-                      >{{ currentPageNr -3}}</a>
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr - 2) > 0 && (currentPageNr -2 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr -2)"
-                      >{{ currentPageNr -2}}</a>
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr -1) > 0 && (currentPageNr -1 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr -1)"
-                      >{{ currentPageNr -1}}</a>
-                      <div is="sui-menu-item">
-                        <strong>{{ currentPageNr}}</strong>
+                      {{c.bank}}
+                    </td>
+                    <td class="right aligned">
+                      <Statistic
+                        :header="c.annualPercentageYield + ' %'"
+                        :subHeader="'as at ' + c.effectiveDate"
+                      />
+                    </td>
+                    <td class="right aligned">
+                      <div
+                        class="ui middle aligned"
+                        :data-tooltip="'Total estimated interest over ' + c.termDescription + ' given a R ' +  investmentAmount + ' investment.'"
+                      >
+                        <Statistic
+                          :header="c.estimatedEarnings"
+                          :icon="'question circle outline icon'"
+                          :subHeader="'Total interest'"
+                        />
                       </div>
+                    </td>
+                    <td class="right aligned">
+                      <Statistic :header="c.term" :subHeader="'months'" />
+                    </td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="4">
+                      <sui-menu v-if="totalPages > 1">
+                        <a is="sui-menu-item" @click.prevent="getResults(1)">
+                          <sui-icon name="left chevron" />First Page
+                        </a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr -4) > 0 && (currentPageNr -4 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr -4)"
+                        >{{ currentPageNr -4}}</a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr -3) > 0 && (currentPageNr -3 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr -3)"
+                        >{{ currentPageNr -3}}</a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr - 2) > 0 && (currentPageNr -2 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr -2)"
+                        >{{ currentPageNr -2}}</a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr -1) > 0 && (currentPageNr -1 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr -1)"
+                        >{{ currentPageNr -1}}</a>
+                        <div is="sui-menu-item">
+                          <strong>{{ currentPageNr}}</strong>
+                        </div>
 
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr + 1) > 0 && (currentPageNr + 1 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr + 1)"
-                      >{{ currentPageNr + 1}}</a>
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr + 2) > 0 && (currentPageNr + 2 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr + 2)"
-                      >{{ currentPageNr + 2}}</a>
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr + 3) > 0 && (currentPageNr + 3 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr + 3)"
-                      >{{ currentPageNr + 3}}</a>
-                      <a
-                        is="sui-menu-item"
-                        v-if="((currentPageNr + 4) > 0 && (currentPageNr + 4 <= totalPages))"
-                        @click.prevent="getResults(currentPageNr + 4)"
-                      >{{ currentPageNr + 4}}</a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr + 1) > 0 && (currentPageNr + 1 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr + 1)"
+                        >{{ currentPageNr + 1}}</a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr + 2) > 0 && (currentPageNr + 2 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr + 2)"
+                        >{{ currentPageNr + 2}}</a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr + 3) > 0 && (currentPageNr + 3 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr + 3)"
+                        >{{ currentPageNr + 3}}</a>
+                        <a
+                          is="sui-menu-item"
+                          v-if="((currentPageNr + 4) > 0 && (currentPageNr + 4 <= totalPages))"
+                          @click.prevent="getResults(currentPageNr + 4)"
+                        >{{ currentPageNr + 4}}</a>
 
-                      <a is="sui-menu-item" @click.prevent="getResults(totalPages)">
-                        <sui-icon name="right chevron" />Last Page
-                      </a>
-                    </sui-menu>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-            <sui-accordion exclusive>
-              <sui-accordion-title active>
-                <sui-icon name="dropdown" />
-                <strong>Important notes for table</strong>
-              </sui-accordion-title>
-              <sui-accordion-content>
-                <small>
-                  <ul>
-                    <li>
-                      To make rates comparable across different banks; all rates have been converted to
-                      <a
-                        target="_blank"
-                        href="https://en.wikipedia.org/wiki/Effective_interest_rate"
-                      >effective annual interest rates</a>. To make a fair comparison, interest is assumed to be calculated daily and paid at maturity of term.
-                    </li>
-                    <li>The rates have been derived from banks' public websites</li>
-                    <li>Actual rates received by any individual may differ to the rates shown above.</li>
-                  </ul>
-                </small>
-              </sui-accordion-content>
-              <sui-accordion-title>
-                <sui-icon name="dropdown" />Why does
-                <span style="color: red">Absa</span> not appear in the list?
-              </sui-accordion-title>
-              <sui-accordion-content>
-                <small>
-                  <ul>
-                    <li>Some enquiries about their fixed deposit rates are outstanding. Specifically they do not disclose whether the quoted rates are nominal or effective.</li>
-                  </ul>
-                </small>
-              </sui-accordion-content>
-            </sui-accordion>
+                        <a is="sui-menu-item" @click.prevent="getResults(totalPages)">
+                          <sui-icon name="right chevron" />Last Page
+                        </a>
+                      </sui-menu>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <sui-accordion exclusive>
+                <sui-accordion-title active>
+                  <sui-icon name="dropdown" />
+                  <strong>Important notes for table</strong>
+                </sui-accordion-title>
+                <sui-accordion-content>
+                  <small>
+                    <ul>
+                      <li>
+                        To make rates comparable across different banks; all rates have been converted to
+                        <a
+                          target="_blank"
+                          href="https://en.wikipedia.org/wiki/Effective_interest_rate"
+                        >effective annual interest rates</a>. To make a fair comparison, interest is assumed to be calculated daily and paid at maturity of term.
+                      </li>
+                      <li>The rates have been derived from banks' public websites</li>
+                      <li>Actual rates received by any individual may differ to the rates shown above.</li>
+                    </ul>
+                  </small>
+                </sui-accordion-content>
+                <sui-accordion-title>
+                  <sui-icon name="dropdown" />Why does
+                  <span style="color: red">Absa</span> not appear in the list?
+                </sui-accordion-title>
+                <sui-accordion-content>
+                  <small>
+                    <ul>
+                      <li>Some enquiries about their fixed deposit rates are outstanding. Specifically they do not disclose whether the quoted rates are nominal or effective.</li>
+                    </ul>
+                  </small>
+                </sui-accordion-content>
+              </sui-accordion>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="mobile only sixteen wide column">
+        <h3 class="ui header">
+          <div class="content">SA's Fixed Deposit Rates</div>
+        </h3>
+
+        <table class="ui celled green striped table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Effective Annual Rate</th>
+              <th>Est Earnings</th>
+              <th>Term</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="c in results">
+              <td>{{c.bank}}</td>
+              <td>{{c.annualPercentageYield}}</td>
+              <td>{{c.estimatedEarnings}}</td>
+              <td>{{c.term}}</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                <sui-menu v-if="totalPages > 1">
+                  <a
+                    is="sui-menu-item"
+                    v-if="((currentPageNr -1) > 0 && (currentPageNr -1 <= totalPages))"
+                    @click.prevent="getResults(currentPageNr -1)"
+                  >Previous Page</a>
+
+                  <a
+                    is="sui-menu-item"
+                    v-if="((currentPageNr + 1) > 0 && (currentPageNr + 1 <= totalPages))"
+                    @click.prevent="getResults(currentPageNr + 1)"
+                  >Next Page</a>
+                </sui-menu>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+        <sui-accordion exclusive>
+          <sui-accordion-title active>
+            <sui-icon name="dropdown" />
+            <strong>Important notes for table</strong>
+          </sui-accordion-title>
+          <sui-accordion-content>
+            <small>
+              <ul>
+                <li>
+                  To make rates comparable across different banks; all rates have been converted to
+                  <a
+                    target="_blank"
+                    href="https://en.wikipedia.org/wiki/Effective_interest_rate"
+                  >effective annual interest rates</a>. To make a fair comparison, interest is assumed to be calculated daily and paid at maturity of term.
+                </li>
+                <li>The rates have been derived from banks' public websites</li>
+                <li>Actual rates received by any individual may differ to the rates shown above.</li>
+              </ul>
+            </small>
+          </sui-accordion-content>
+          <sui-accordion-title>
+            <sui-icon name="dropdown" />Why does
+            <span style="color: red">Absa</span> not appear in the list?
+          </sui-accordion-title>
+          <sui-accordion-content>
+            <small>
+              <ul>
+                <li>Some enquiries about their fixed deposit rates are outstanding. Specifically they do not disclose whether the quoted rates are nominal or effective.</li>
+              </ul>
+            </small>
+          </sui-accordion-content>
+        </sui-accordion>
       </div>
     </div>
   </div>
