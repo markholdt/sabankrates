@@ -14,6 +14,9 @@ import moment from "moment";
 import VueAnalytics from "vue-analytics";
 
 require("semantic-ui-css/semantic.css");
+
+const isProd = process.env.NODE_ENV === "production";
+
 Vue.config.productionTip = false;
 Vue.use(VueNumeric);
 Vue.use(SuiVue);
@@ -21,7 +24,6 @@ Vue.use(SuiVue);
 Vue.use(VueNumerals);
 //Vue.use(VPopover, { tooltip: true });
 //Vue.use(PortalVue);
-
 Vue.filter("formatDate", function(value) {
   if (value) {
     return moment(String(value)).format("MMMM YYYY");
@@ -29,7 +31,11 @@ Vue.filter("formatDate", function(value) {
 });
 Vue.use(VueAnalytics, {
   id: "UA-149922343-1",
-  router: router
+  router: router,
+  debug: {
+    enabled: !isProd,
+    sendHitTask: isProd
+  }
 });
 new Vue({
   router,
