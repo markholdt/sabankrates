@@ -208,6 +208,7 @@
 <script>
 import { getBankRates } from "@/gateway";
 import Statistic from "@/components/Statistic.vue";
+import { page } from 'vue-analytics';
 export default {
   name: "RatesList",
   components: { Statistic },
@@ -288,6 +289,9 @@ export default {
     };
   },
   methods: {
+     track () {
+      page('/fixedDeposit')
+    },
     async getResults(pageNr) {
       console.log(this.currentBank);
       const response = await getBankRates({
