@@ -54,6 +54,8 @@
             </div>
 
             <div class="ui primary button" @click.prevent="getResults(1)">Update</div>
+            <br />
+            <Adsense data-ad-client="ca-pub-6675870942150850"></Adsense>
           </div>
         </div>
         <div class="twelve wide column">
