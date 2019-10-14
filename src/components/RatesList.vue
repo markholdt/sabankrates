@@ -355,7 +355,7 @@ export default {
   data() {
     return {
       //
-      modal: true,
+      modal: false,
       date: new Date(),
       investmentAmount: 10000,
       current: null,
