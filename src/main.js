@@ -22,13 +22,14 @@ Vue.use(VueNumerals);
 //Vue.use(VPopover, { tooltip: true });
 //Vue.use(PortalVue);
 
-Vue.use(VueAnalytics, {
-  id: "UA-149922343-1"
-});
 Vue.filter("formatDate", function(value) {
   if (value) {
     return moment(String(value)).format("MMMM YYYY");
   }
+});
+Vue.use(VueAnalytics, {
+  id: "UA-149922343-1",
+  router: router
 });
 new Vue({
   router,

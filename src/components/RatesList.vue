@@ -61,7 +61,7 @@
               class="ui medium circular image"
               src="https://lipis.github.io/flag-icon-css/flags/4x3/za.svg"
             />
-            <div class="content">Best Fixed Deposit Rates for {{ date| formatDate}}</div>
+            <div class="content">South Africa's Best Fixed Deposit Rates for {{ date| formatDate}}</div>
           </h2>
 
           <div class="ui segment">
@@ -208,7 +208,6 @@
 <script>
 import { getBankRates } from "@/gateway";
 import Statistic from "@/components/Statistic.vue";
-import { page } from 'vue-analytics';
 export default {
   name: "RatesList",
   components: { Statistic },
@@ -289,9 +288,6 @@ export default {
     };
   },
   methods: {
-     track () {
-      page('/fixedDeposit')
-    },
     async getResults(pageNr) {
       console.log(this.currentBank);
       const response = await getBankRates({
