@@ -54,8 +54,6 @@
             </div>
 
             <div class="ui primary button" @click.prevent="getResults(1)">Update</div>
-            <br />
-            <div class="ui medium rectangle ad">asd</div>
           </div>
         </div>
         <div class="twelve wide column">
@@ -106,6 +104,35 @@
                   </td>
                   <td class="right aligned">
                     <Statistic :header="c.term" :subHeader="'months'" />
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" class="right aligned">
+                    <social-sharing
+                      url="https://www.bankrate.co.za/depositRates"
+                      inline-template
+                      title="South Africa's fixed deposit rates compared"
+                      quote="South Africa's fixed deposit rates compared"
+                      hashtags="money"
+                    >
+                      <div>
+                        <network network="facebook">
+                          <button :data-tooltip="'Share'" class="ui circular facebook icon button">
+                            <i class="facebook icon"></i>
+                          </button>
+                        </network>
+                        <network network="twitter">
+                          <button :data-tooltip="'Share'" class="ui circular twitter icon button">
+                            <i class="twitter icon"></i>
+                          </button>
+                        </network>
+                        <network network="linkedin">
+                          <button :data-tooltip="'Share'" class="ui circular linkedin icon button">
+                            <i class="linkedin icon"></i>
+                          </button>
+                        </network>
+                      </div>
+                    </social-sharing>
                   </td>
                 </tr>
               </tbody>
@@ -346,15 +373,17 @@
 <script>
 import { getBankRates } from "@/gateway";
 import Statistic from "@/components/Statistic.vue";
+import SignUpEmail from "@/components/SignUpEmail.vue";
 export default {
   name: "RatesList",
-  components: { Statistic },
+  components: { Statistic, SignUpEmail },
   props: {
     msg: String
   },
   data() {
     return {
       //
+      signUpModal: false,
       modal: false,
       date: new Date(),
       investmentAmount: 10000,

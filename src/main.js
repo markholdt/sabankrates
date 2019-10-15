@@ -13,13 +13,8 @@ import moment from "moment";
 
 require("semantic-ui-css/semantic.css");
 import VueAnalytics from "vue-analytics";
-import Ads from "vue-google-adsense";
-
-Vue.use(require("vue-script2"));
-Vue.use(Ads.AutoAdsense, { adClient: "ca-pub-6675870942150850" });
-Vue.use(Ads.Adsense);
-Vue.use(Ads.InArticleAdsense);
-Vue.use(Ads.InFeedAdsense);
+var SocialSharing = require('vue-social-sharing');
+Vue.use(SocialSharing);
 
 const isProd = process.env.NODE_ENV === "production";
 

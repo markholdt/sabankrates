@@ -15,8 +15,7 @@ export default new Router({
       path: "/fixedDeposit",
       name: "fixedDeposit",
       component: FixedDeposit
-    }
-    /*,
+    },
     {
       path: "/about",
       name: "about",
@@ -26,7 +25,8 @@ export default new Router({
       component: () =>
         import(
           // webpackChunkName: "about"
-        "./views/About.vue")
-    }*/
+          "./views/About.vue"
+        )
+    }
   ]
 });
