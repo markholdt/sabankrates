@@ -68,15 +68,12 @@
           </h2>
 
           <a
-            :v-show="false"
             class="ui animated red fade button"
             href="https://share.hsforms.com/1BTVPlw6qRKWkt5FixDxHGw3wvyy"
             target="_blank"
-            tabindex="0"
           >
-            <div class="visible content">
-              <i class="ui icon basic envelope open outline"></i>Get the FREE Fixed Deposit Report
-            </div>
+            <i class="ui icon basic envelope open outline"></i>
+            Get the FREE Fixed Deposit Report
           </a>
 
           <div class="ui divider"></div>
