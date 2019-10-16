@@ -13,7 +13,7 @@ import moment from "moment";
 
 require("semantic-ui-css/semantic.css");
 import VueAnalytics from "vue-analytics";
-var SocialSharing = require('vue-social-sharing');
+var SocialSharing = require("vue-social-sharing");
 Vue.use(SocialSharing);
 
 const isProd = process.env.NODE_ENV === "production";

@@ -1,5 +1,7 @@
 <template>
   <div class="ui">
+    <SignUpEmail :modal="signUpModal" @close="signUpModal = false" />
+
     <div class="ui column padded grid centered">
       <!-- computer only stuff -->
       <div class="computer tablet only row">
@@ -65,7 +67,19 @@
             <div class="content">South Africa's Best Fixed Deposit Rates for {{ date| formatDate}}</div>
           </h2>
 
-          <div class="ui segment">
+          <a
+            class="ui animated red fade button"
+            href="https://share.hsforms.com/1BTVPlw6qRKWkt5FixDxHGw3wvyy"
+            target="_blank"
+            tabindex="0"
+          >
+            <div class="visible content">
+              <i class="ui icon basic envelope open outline"></i>Get the FREE Fixed Deposit Report
+            </div>
+          </a>
+          <a href="https://share.hsforms.com/1BTVPlw6qRKWkt5FixDxHGw3wvyy" target="_blank">Email me</a>
+          <div class="ui divider"></div>
+          <div class="ui">
             <table class="ui celled green striped table">
               <thead>
                 <tr>
@@ -439,7 +453,8 @@ export default {
         { key: "fnb", text: "FNB", value: "FNB" },
         { key: "ned", text: "Nedbank", value: "NED" },
         { key: "ca", text: "Capitec", value: "CAP" },
-        { key: "sas", text: "Sasfin", value: "SAS" }
+        { key: "sas", text: "Sasfin", value: "SAS" },
+        { key: "afb", text: "African Bank", value: "AFB" }
       ],
       currentBank: [],
       currentAge: "18",
