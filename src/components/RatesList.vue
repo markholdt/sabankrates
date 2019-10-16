@@ -68,6 +68,7 @@
           </h2>
 
           <a
+            :v-show="false"
             class="ui animated red fade button"
             href="https://share.hsforms.com/1BTVPlw6qRKWkt5FixDxHGw3wvyy"
             target="_blank"
@@ -77,7 +78,7 @@
               <i class="ui icon basic envelope open outline"></i>Get the FREE Fixed Deposit Report
             </div>
           </a>
-          <a href="https://share.hsforms.com/1BTVPlw6qRKWkt5FixDxHGw3wvyy" target="_blank">Email me</a>
+
           <div class="ui divider"></div>
           <div class="ui">
             <table class="ui celled green striped table">
